@@ -1,2 +1,0 @@
-# autoWifi
-auto connect wifi
