@@ -24,13 +24,13 @@ public class AutoConnect {
      * 97~122 is floor case
      */
     public String autoConnect(String SSID, WifiAdmin.WifiCipherType type, WifiAdmin wifiAdmin) {
-        String wifiPsw = "";
         ArrayList validChar = new ArrayList();
+        ArrayList validNum = new ArrayList();
         char tmp;
-
         for (int i = 48; i <= 57; i++) {
             tmp = (char) i;
             validChar.add(tmp);
+            validNum.add(tmp);
         }
 
         for (int i = 65; i <= 90; i++) {
@@ -43,28 +43,45 @@ public class AutoConnect {
             validChar.add(tmp);
         }
         int validSize = validChar.size();
-        int tmpRand;
+        int validNumSize = validNum.size();
+        String result = "";
+
+        //process telephone or mobile
         for (int wifiLength = 8; wifiLength < 64; wifiLength++) {
-            double totalTryTimes = Math.pow(validSize, wifiLength);
-            for (int tryTimes = 0; tryTimes < totalTryTimes; tryTimes++) {
-                wifiPsw = "";
-                for (int curLength = 0; curLength < wifiLength; curLength++) {
-                    Random rand = new Random();
-                    tmpRand = Math.abs(rand.nextInt(validSize));
-                    wifiPsw += validChar.get(tmpRand);
-                }
-                int ip = connectWifi(SSID, wifiPsw, type, wifiAdmin);
-                if (ip > 0) {
-                    return wifiPsw + ":" + ip + ":" + tryTimes;
-                }
+            if (wifiLength == 8 || wifiLength == 11) {
+                result = connectDetail(validNum, validNumSize, wifiLength, SSID, type, wifiAdmin);
+                if (result != "")  return result;
             }
         }
-        return "";
+
+        //process all
+        for (int wifiLength = 8; wifiLength < 64; wifiLength++) {
+            result = connectDetail(validChar, validSize, wifiLength, SSID, type, wifiAdmin);
+            if (result != "")  return result;
+        }
+        return result;
     }
 
     private int connectWifi(String SSID, String wifiPsw, WifiAdmin.WifiCipherType type, WifiAdmin wifiAdmin) {
         WifiConfiguration wcg = wifiAdmin.createWifiInfo(SSID, wifiPsw, type);
         wifiAdmin.addNetwork(wcg);
-        return  wifiAdmin.getmWifiManager().getConnectionInfo().getIpAddress();
+        return wifiAdmin.getmWifiManager().getConnectionInfo().getIpAddress();
+    }
+
+    private String connectDetail(ArrayList validChar, int validSize, int wifiLength, String SSID, WifiAdmin.WifiCipherType type, WifiAdmin wifiAdmin) {
+        double totalTryTimes = Math.pow(validSize, wifiLength);
+        for (int tryTimes = 0; tryTimes < totalTryTimes; tryTimes++) {
+            String wifiPsw = "";
+            for (int curLength = 0; curLength < wifiLength; curLength++) {
+                Random rand = new Random();
+                int tmpRand = Math.abs(rand.nextInt(validSize));
+                wifiPsw += validChar.get(tmpRand);
+            }
+            int ip = connectWifi(SSID, wifiPsw, type, wifiAdmin);
+            if (ip > 0) {
+                return wifiPsw + ":" + ip + ":" + tryTimes;
+            }
+        }
+        return "";
     }
 }

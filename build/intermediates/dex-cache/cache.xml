@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Sandy.xie\StudioProjects\autoWifi\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Sandy.xie\StudioProjects\autoWifi\app\build\intermediates\pre-dexed\debug\classes-a0c845a77083390688cad4b5219d98ba73654958.jar" />
-    </item>
-    <item
         jar="C:\Users\Sandy.xie\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -21,6 +14,13 @@
         revision="22.0.1"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
         <dex dex="C:\Users\Sandy.xie\StudioProjects\autoWifi\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-f4d8684fb5beac1bac07d124dc56d326b153eb4d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Sandy.xie\StudioProjects\autoWifi\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Sandy.xie\StudioProjects\autoWifi\app\build\intermediates\pre-dexed\debug\classes-a0c845a77083390688cad4b5219d98ba73654958.jar" />
     </item>
 
 </items>
