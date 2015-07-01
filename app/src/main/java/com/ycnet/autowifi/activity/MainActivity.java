@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> arg0, View view, int index,
                                     long arg3) {
                 WifiAdmin wifiAdmin = new WifiAdmin(view.getContext());
+                wifiAdmin.openWifi();
                 String targetSSID = dataList.get(index);
                 AutoConnect autoConnect = new AutoConnect();
                 String realPsw = autoConnect.autoConnect(targetSSID, WifiAdmin.WifiCipherType.WIFICIPHER_WPA, wifiAdmin);

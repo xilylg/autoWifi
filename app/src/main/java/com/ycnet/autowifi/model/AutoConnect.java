@@ -47,17 +47,17 @@ public class AutoConnect {
         String result = "";
 
         //process telephone or mobile
-        for (int wifiLength = 8; wifiLength < 64; wifiLength++) {
-            if (wifiLength == 8 || wifiLength == 11) {
-                result = connectDetail(validNum, validNumSize, wifiLength, SSID, type, wifiAdmin);
-                if (result != "")  return result;
-            }
+        String prePsws[] = {"0592", "13", "15", "17", "18", "0593"};
+        for (String prePsw : prePsws) {
+            result = connectDetail(validNum, validNumSize, 11, SSID, type, wifiAdmin, prePsw);
+            if (result != "") return result;
         }
 
         //process all
         for (int wifiLength = 8; wifiLength < 64; wifiLength++) {
-            result = connectDetail(validChar, validSize, wifiLength, SSID, type, wifiAdmin);
-            if (result != "")  return result;
+            String prePsw = "";
+            result = connectDetail(validChar, validSize, wifiLength, SSID, type, wifiAdmin, prePsw);
+            if (result != "") return result;
         }
         return result;
     }
@@ -68,10 +68,13 @@ public class AutoConnect {
         return wifiAdmin.getmWifiManager().getConnectionInfo().getIpAddress();
     }
 
-    private String connectDetail(ArrayList validChar, int validSize, int wifiLength, String SSID, WifiAdmin.WifiCipherType type, WifiAdmin wifiAdmin) {
+    private String connectDetail(ArrayList validChar, int validSize, int wifiLength, String SSID, WifiAdmin.WifiCipherType type, WifiAdmin wifiAdmin, String prePsw) {
+        int preLength = 0;
+        if (prePsw != "") preLength = prePsw.length();
+        wifiLength = wifiLength - preLength;
         double totalTryTimes = Math.pow(validSize, wifiLength);
         for (int tryTimes = 0; tryTimes < totalTryTimes; tryTimes++) {
-            String wifiPsw = "";
+            String wifiPsw = prePsw;
             for (int curLength = 0; curLength < wifiLength; curLength++) {
                 Random rand = new Random();
                 int tmpRand = Math.abs(rand.nextInt(validSize));
